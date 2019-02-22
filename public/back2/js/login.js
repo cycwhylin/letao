@@ -31,6 +31,10 @@ $(function() {
             min: 2,
             max: 6,
             message: '用户名长度为2-6位'
+          },
+          // callback 专门用于配置回调提示消息
+          callback: {
+            message: '用户名不存在'
           }
         }
       },
@@ -45,11 +49,14 @@ $(function() {
             min: 6,
             max: 12,
             message: '密码长度必须是6-12位'
+          },
+          callback: {
+            message: '密码错误'
           }
         }
       }
     }
-  })
+  });
 
 
   /* 
@@ -76,10 +83,17 @@ $(function() {
         console.log( info );
 
         if (info.error === 1000) {
-          alert('用户名不存在');
+          // alert('用户名不存在');
+          // 调用插件实例方法, 更新username字段状态成失败状态
+          // updateStatus( field, status, validator );
+          // 参数1: 需要更新的字段名称
+          // 参数2: 需要更新成的状态  VALID 成功  INVALID 失败
+          // 参数3: 配置校验规则, 将来会用配置的规则的 message 进行提示
+          $('#form').data('bootstrapValidator').updateStatus( 'username', 'INVALID', 'callback' );
         }
         if (info.error === 1001) {
-          alert('密码错误');
+          // alert('密码错误');
+          $('#form').data('bootstrapValidator').updateStatus('password', 'INVALID', 'callback');
         }
         if (info.success) {
           // 登录成功, 跳转首页
@@ -88,5 +102,17 @@ $(function() {
       }
     })
 
+  });
+
+
+  /* 
+    3. 表单重置功能
+       reset 按钮, 本身就可以重置内容, 所以此时只需要重置状态即可
+       resetForm(false);  只重置状态
+       resetForm(true);   重置内容和状态
+  */
+  $('[type="reset"]').click(function() {
+    // 重置状态即可
+    $('#form').data('bootstrapValidator').resetForm();
   })
 });
