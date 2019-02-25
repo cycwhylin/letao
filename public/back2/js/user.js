@@ -5,6 +5,7 @@ $(function () {
   // template(模板id, 数据对象)  返回一个 htmlStr
   var currentPage = 1; // 当前页
   var pageSize = 5; // 每页条数
+
   var currentId;  // 标记当前正在编辑的用户 id
   var isDelete;  // 标记修改用户成什么状态
   render();
@@ -14,7 +15,7 @@ $(function () {
       type: 'get',
       url: '/user/queryUser',
       data: {
-        page: currentPage,
+        page: currentPage,  
         pageSize: pageSize,
       },
       dataType: 'json',
@@ -70,15 +71,13 @@ $(function () {
   // 1. 给动态创建的元素绑定点击事件
   // 2. 批量绑定点击事件 (效率比较高的)
   // 思路: 使用事件委托绑定按钮点击事件
-  $('tbody').on('click', '.btn', function () {
+  $('tbody').on('click', '.btn', function() {
 
     // 显示模态框
     $('#userModal').modal('show');
 
     // 获取 id
     currentId = $(this).parent().data('id');
-    console.log(currentId);
-
 
     // 获取启用禁用状态
     // 有btn-danger类 => 禁用按钮
@@ -88,7 +87,7 @@ $(function () {
 
 
   // 给模态框的确定按钮, 添加点击事件
-  $('#confirmBtn').click(function () {
+  $('#confirmBtn').click(function() {
     // 发送ajax请求, 完成用户状态的编辑
 
     // 传参需要两个 id  isDelete
@@ -100,8 +99,8 @@ $(function () {
         isDelete: isDelete
       },
       dataType: 'json',
-      success: function (info) {
-        console.log(info);
+      success: function( info ) {
+        console.log( info );
         if (info.success) {
           // 关闭模态框
           $('#userModal').modal('hide');

@@ -106,6 +106,9 @@
                   <!-- 挖个坑 -->
                 </ul>
               </div>
+
+              <!-- 准备一个隐藏域, 专门用于提交数据 -->
+              <input type="hidden" name="categoryId">
             </div>
 
             <div class="form-group">
@@ -114,11 +117,17 @@
 
             <div class="form-group">
               <label class="btn btn-default" for="fileupload">选择图片</label>
-              <input type="file" id="fileupload" style="display: none;">
+              <!-- 配置必要的属性, input, type类型 file
+                   1. name 后台用于接收图片文件的
+                   2. data-url 配置插件将来上传文件时, 请求的后台接口地址
+                   3. post 只要是文件上传, 必然是 post 请求, 默认就是 post
+              -->
+              <input data-url="/category/addSecondCategoryPic" name="pic1" type="file" id="fileupload" style="display: none;">
             </div>
 
-            <div class="form-group">
+            <div class="form-group" id="imgBox">
               <img style="height: 100px;" src="./images/none.png" alt="">
+              <input type="hidden" name="brandLogo">
             </div>
 
 
@@ -172,12 +181,15 @@
 
   <script type="text/html" id="dropdownTpl">
     {{ each rows v i }}
-      <li><a href="#">{{ v.categoryName }}</a></li>
+      <li><a data-id="{{ v.id }}" href="#">{{ v.categoryName }}</a></li>
     {{ /each }}
   </script>
 
 
   <script src="./lib/jquery/jquery.js"></script>
+  <script src="./lib/jquery-fileupload/jquery.ui.widget.js"></script>
+  <script src="./lib/jquery-fileupload/jquery.fileupload.js"></script>
+
   <script src="./lib/bootstrap/js/bootstrap.js"></script>
   <script src="./lib/bootstrap-validator/js/bootstrapValidator.min.js"></script>
   <script src="./lib/bootstrap-paginator/bootstrap-paginator.js"></script>
