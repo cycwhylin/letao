@@ -79,7 +79,6 @@ $(function () {
             console.log(data);
             var picObj = data.result;
             var picUrl = picObj.picAddr;
-
             picArr.unshift(picObj);
 
             $('#imgBox').prepend('<img style = "height: 100px;" src = "' + picUrl + '" alt = "" >');
@@ -95,7 +94,6 @@ $(function () {
 
             if (picArr.length === 3) {
                 $('#form').data('bootstrapValidator').updateStatus('picStatus', 'VALID');
-
             }
         }
     });
@@ -200,15 +198,16 @@ $(function () {
 
         //获取表单数据
         var paramsStr = $('#form').serialize();
-        console.log(paramsStr);
+        paramsStr += '&picArr=' + JSON.stringify(picArr);
+        // console.log(paramsStr);
         
 
         //拼接图片
-        paramsStr += '&picArr='+ JSON.stringify(picArr);
+        // paramsStr += '&picArr=' + JSON.stringify(picArr);
 
 
         $.ajax({
-            tyep:'post',
+            type:'post',
             url: '/product/addProduct',
             data: paramsStr,
             dataType:"json",

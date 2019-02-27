@@ -218,6 +218,8 @@ $(function() {
     // 还需要拼接上图片数据  picArr
     // key=value&key1=value1&key2=value2
     paramsStr += '&picArr=' + JSON.stringify(picArr);
+    console.log(paramsStr);
+
 
     $.ajax({
       type: 'post',
